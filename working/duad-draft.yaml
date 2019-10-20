@@ -1,0 +1,108 @@
+SchemaBlock:
+  version:
+    type: string
+  components:
+    schemas:
+      AccessProfile:
+        type: object
+        properties:
+          name:
+            type: string
+          accessProfileVersion:
+            type: string
+          accessProfileReferences:
+            description: 'Publications, URLs, DOIs   
+            for the resource.'
+            type: array
+            items:
+              type: string
+          accessProfileCreateDate:
+            type: string
+            example: '2017-01-17T20:33:40Z'
+          accessProfileUpdates:
+            description: ‘Dates at which this access 
+            profile was updated.’
+            type: array
+            items:
+              type: string
+          resourceName:
+            type: string
+          resourceReferences:
+            description: 'Publications, URLs, DOIs 
+            for the resource.'
+            type: array
+            items:
+              type: string
+          resourceDescription:
+            type: string
+          resourceDataLevel:
+            type: string
+            enum:
+              - UNKNOWN
+              - DATABASE
+              - METADATA
+              - SUMMARISED
+              - DATASET
+              - RECORDSET
+              - RECORD
+              - RECORDFIELD
+          resourceContactNames:
+            type: array
+            items:
+              $ref: '#/components/schemas/Contact'
+          resourceContactOrganisations:
+            type: array
+            items:
+              type: string
+          sharingMode:
+            type: string
+            enum:
+              - UNKNOWN
+              - DISCOVERY
+              - ACCESS
+              - DISCOVERY_AND_ACCESS
+          permissionMode:
+            type: string
+            enum:
+              - UNKNOWN
+              - ALL_TERMS_PERMITTED_BY_DEFAULT
+              - ALL_TERMS_FORBIDDEN_BY_DEFAULT
+
+      Contact:
+        type: object
+        properties:
+          name:
+            type: string
+          email:
+            type: string
+
+      RestrictionClass:
+        type: object
+        properties:
+          restriction_rule:
+            type: string
+            enum:
+              - UNKNOWN
+              - NO_CONSTRAINTS
+              - CONSTRAINTS
+              - FORBIDDEN
+          restriction_object:
+            $ref: ./OntologyClass
+          constraints_details:
+            type: string
+
+      TermClass:
+        type: object
+        properties:
+          data_use_class:
+            $ref: ./OntologyClass
+          restriction_class:
+            $ref: ./RestrictionClass
+
+      Terms:
+        description: 'List of permitted terms of use 
+        including general terms, profile of users, 
+        purposes of use, etc.'
+        type: array
+        items:
+          $ref: ./TermClass
